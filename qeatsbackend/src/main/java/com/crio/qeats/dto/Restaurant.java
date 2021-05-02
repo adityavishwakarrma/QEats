@@ -34,6 +34,7 @@ import lombok.NoArgsConstructor;
 //    "South Indian"
 //  ]
 // }
+//we are inside the restaurant.java
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
