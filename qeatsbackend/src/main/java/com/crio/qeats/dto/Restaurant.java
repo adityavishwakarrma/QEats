@@ -1,4 +1,3 @@
-
 /*
  *
  *  * Copyright (c) Crio.Do 2019. All rights reserved
@@ -42,6 +41,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class Restaurant {
      
+  @JsonIgnore
+  private String id;
   @NotNull
   public String restaurantId;
   @NotNull
