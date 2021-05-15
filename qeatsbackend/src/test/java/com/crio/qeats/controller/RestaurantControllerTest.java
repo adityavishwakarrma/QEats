@@ -254,6 +254,4 @@ public class RestaurantControllerTest {
 
     assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
   }
-  
 }
-
