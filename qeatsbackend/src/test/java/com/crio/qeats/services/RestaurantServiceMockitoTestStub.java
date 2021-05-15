@@ -72,7 +72,6 @@ public class RestaurantServiceMockitoTestStub {
     // debug it, find out whats going wrong and fix it.
     // Notes - You can create additional mocks, setup the same and try out.
 
-
     when(restaurantRepositoryServiceMock
             .findAllRestaurantsCloseBy(any(Double.class), any(Double.class),
                 eq(LocalTime.of(3, 0)),
@@ -131,7 +130,7 @@ public class RestaurantServiceMockitoTestStub {
     .findAllRestaurantsCloseBy(new GetRestaurantsRequest(20.0, 30.2),
         LocalTime.of(3, 0));
 
-allRestaurantsCloseByPeakHours = restaurantService
+    allRestaurantsCloseByPeakHours = restaurantService
     .findAllRestaurantsCloseBy(new GetRestaurantsRequest(21.0, 31.1),
         LocalTime.of(19, 0));
 
