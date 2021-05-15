@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+
 @SpringBootApplication
 @Log4j2
 public class QEatsApplication {

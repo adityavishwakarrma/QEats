@@ -8,9 +8,7 @@ package com.crio.qeats.services;
 
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
-
 import org.springframework.beans.factory.annotation.Qualifier;
-
 import java.time.LocalTime;
 
 public interface RestaurantService {

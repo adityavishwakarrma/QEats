@@ -14,6 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;
 
 @Component
 public class RestaurantRepositoryServiceDummyImpl implements RestaurantRepositoryService {
