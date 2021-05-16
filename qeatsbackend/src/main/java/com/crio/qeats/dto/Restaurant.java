@@ -11,12 +11,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// TODO: CRIO_TASK_MODULE_SERIALIZATION
 //  Implement Restaurant class.
 // Complete the class such that it produces the following JSON during serialization.
 // {
@@ -63,3 +64,4 @@ public class Restaurant {
   public List<String> attributes;
 
 }
+

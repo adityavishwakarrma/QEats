@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 
 // @Component
-// @Qualifier("RestaurantRepositoryServiceDummyImpl")
 public class RestaurantRepositoryServiceDummyImpl implements RestaurantRepositoryService {
   private static final String FIXTURES = "fixtures/exchanges";
   private ObjectMapper objectMapper = new ObjectMapper();

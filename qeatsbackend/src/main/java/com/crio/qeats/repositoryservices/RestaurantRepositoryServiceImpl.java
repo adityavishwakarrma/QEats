@@ -39,13 +39,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
-@Component
-// @Qualifier("RestaurantRepositoryServiceImpl")
 @Service
 public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryService {
 
-  @Autowired
-  private MongoTemplate mongoTemplate;
+  // @Autowired
+  // private MongoTemplate mongoTemplate;
 
   @Autowired
   private Provider<ModelMapper> modelMapperProvider;
@@ -72,22 +70,23 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
     List<Restaurant> restaurants = new ArrayList<>();
 
-      //CHECKSTYLE:OFF
+    //CHECKSTYLE:OFF
     
-      ModelMapper modelMapper = modelMapperProvider.get();
-      // List<RestaurantEntity> restaurantEntities = mongoTemplate.findAll(RestaurantEntity.class);
+    ModelMapper modelMapper = modelMapperProvider.get();
+    // List<RestaurantEntity> restaurantEntities = mongoTemplate.findAll(RestaurantEntity.class);
       
-      List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
+    List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
   
-      for (RestaurantEntity restaurantEntity : restaurantEntities) {
-        if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime, latitude, longitude, servingRadiusInKms)) {
-          restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
-        }
+    for (RestaurantEntity restaurantEntity : restaurantEntities) {
+      if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime, 
+          latitude, longitude, servingRadiusInKms)) {
+        restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
       }
+    }
   
-      return restaurants;
+    return restaurants;
 
-      //CHECKSTYLE:ON
+    //CHECKSTYLE:ON
   }
 
 

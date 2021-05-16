@@ -10,7 +10,6 @@ import com.crio.qeats.dto.Restaurant;
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
 import com.crio.qeats.repositoryservices.RestaurantRepositoryService;
-import com.crio.qeats.repositoryservices.RestaurantRepositoryServiceDummyImpl;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
