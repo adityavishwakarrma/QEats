@@ -50,7 +50,7 @@ public class RestaurantController {
 
   @GetMapping(RESTAURANTS_API)
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(
-       GetRestaurantsRequest getRestaurantsRequest) {
+      @RequestBody  GetRestaurantsRequest getRestaurantsRequest) {
 
     log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;

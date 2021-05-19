@@ -36,7 +36,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
   
   @Autowired
-  // @Qualifier("RestaurantRepositoryServiceDummyImpl")
   private RestaurantRepositoryService restaurantRepositoryService;
 
   // TODO: CRIO_TASK_MODULE_RESTAURANTSAPI - Implement findAllRestaurantsCloseby.

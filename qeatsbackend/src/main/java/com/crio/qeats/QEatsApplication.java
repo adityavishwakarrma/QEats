@@ -51,5 +51,7 @@ public class QEatsApplication {
 
 }
 
+
 // implementation "org.springframework.boot:spring-boot-starter"
 // implementation "org.springframework.boot:spring-boot-starter-web"
+//  "https://images.pexels.com/photos/1268558/pexels-photo-1268558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
