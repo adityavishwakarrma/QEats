@@ -55,3 +55,16 @@ public class QEatsApplication {
 // implementation "org.springframework.boot:spring-boot-starter"
 // implementation "org.springframework.boot:spring-boot-starter-web"
 //  "https://images.pexels.com/photos/1268558/pexels-photo-1268558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+//  {
+//   "id": "10",
+//   "restaurantId": "10",
+//   "name": "AndhraSpice",
+//   "city": "Hsr Layout",
+//   "imageUrl": "https://i.guim.co.uk/img/media/00d44c05221beceb1ebf5d25448fe879f8fde296/0_330_3500_2099/master/3500.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=b3b82b2ad8b42ed42c26a52c46abd8a9",
+//   "latitude": 20.027,
+//   "longitude": 30.0,
+//   "attributes": [
+//     "Tamil",
+//     "South Indian"
+//   ]
+// },
