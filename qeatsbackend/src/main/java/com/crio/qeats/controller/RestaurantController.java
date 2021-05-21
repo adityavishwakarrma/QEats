@@ -50,20 +50,21 @@ public class RestaurantController {
 
   @GetMapping(RESTAURANTS_API)
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(
-      @RequestBody  GetRestaurantsRequest getRestaurantsRequest) {
+       GetRestaurantsRequest getRestaurantsRequest) {
 
     log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
-
+    
     //CHECKSTYLE:OFF
     if (getRestaurantsRequest.getLatitude() != null && getRestaurantsRequest.getLongitude() != null
         && getRestaurantsRequest.getLatitude() >= -90 && getRestaurantsRequest.getLatitude() <= 90
-        && getRestaurantsRequest.getLongitude() >= -180 && getRestaurantsRequest.getLongitude() <= 180) {
+        && getRestaurantsRequest.getLongitude() >= -180 
+        && getRestaurantsRequest.getLongitude() <= 180) {
 
       getRestaurantsResponse = restaurantService
               .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
       log.info("getRestaurants returned {}", getRestaurantsResponse);
-
+      
       return ResponseEntity.ok().body(getRestaurantsResponse);
     }
     //CHECKSTYLE:ON

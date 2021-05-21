@@ -40,14 +40,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Primary
-@Service
+@Component
 public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryService {
-
-  // @Autowired
-  // private MongoTemplate mongoTemplate;
-
-  @Autowired
-  private Provider<ModelMapper> modelMapperProvider;
 
   private boolean isOpenNow(LocalTime time, RestaurantEntity res) {
     LocalTime openingTime = LocalTime.parse(res.getOpensAt());
@@ -66,16 +60,14 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   @Autowired
   private RestaurantRepository restaurantRepository;
 
+  @Override
   public List<Restaurant> findAllRestaurantsCloseBy(Double latitude,
       Double longitude, LocalTime currentTime, Double servingRadiusInKms) {
 
     List<Restaurant> restaurants = new ArrayList<>();
 
-    //CHECKSTYLE:OFF
+    ModelMapper modelMapper = new ModelMapper();
     
-    ModelMapper modelMapper = modelMapperProvider.get();
-    // List<RestaurantEntity> restaurantEntities = mongoTemplate.findAll(RestaurantEntity.class);
-      
     List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
   
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
@@ -87,7 +79,6 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   
     return restaurants;
 
-    //CHECKSTYLE:ON
   }
 
 
@@ -117,7 +108,20 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
     return false;
   }
 
+  
+  // @Autowired
+  // private MongoTemplate mongoTemplate;
+
+  // @Autowired
+  // private Provider<ModelMapper> modelMapperProvider;
 
 
+  
+ 
+    
+  // ModelMapper modelMapper = modelMapperProvider.get();
+
+
+  // List<RestaurantEntity> restaurantEntities = mongoTemplate.findAll(RestaurantEntity.class);
 }
 
