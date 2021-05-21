@@ -6,6 +6,7 @@
 
 package com.crio.qeats.controller;
 
+import com.crio.qeats.dto.Restaurant;
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
 import com.crio.qeats.services.RestaurantService;
@@ -64,7 +65,11 @@ public class RestaurantController {
       getRestaurantsResponse = restaurantService
               .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
       log.info("getRestaurants returned {}", getRestaurantsResponse);
-      
+
+      for (Restaurant r : getRestaurantsResponse.getRestaurants()) {
+        r.setName(r.getName().replaceAll("[^\\x00-\\x7F]", ""));
+      }
+
       return ResponseEntity.ok().body(getRestaurantsResponse);
     }
     //CHECKSTYLE:ON
