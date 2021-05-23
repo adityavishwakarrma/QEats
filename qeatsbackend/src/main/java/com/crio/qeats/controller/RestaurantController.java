@@ -10,6 +10,8 @@ import com.crio.qeats.dto.Restaurant;
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
 import com.crio.qeats.services.RestaurantService;
+import com.crio.qeats.services.RestaurantServiceImpl;
+
 import java.time.LocalTime;
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
@@ -49,9 +51,13 @@ public class RestaurantController {
   @Autowired
   private RestaurantService restaurantService;    
 
+  long timeReqServiceData;  
+
   @GetMapping(RESTAURANTS_API)
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(
        GetRestaurantsRequest getRestaurantsRequest) {
+
+    long startTimeInMillis = System.currentTimeMillis();
 
     log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
@@ -61,19 +67,36 @@ public class RestaurantController {
         && getRestaurantsRequest.getLatitude() >= -90 && getRestaurantsRequest.getLatitude() <= 90
         && getRestaurantsRequest.getLongitude() >= -180 
         && getRestaurantsRequest.getLongitude() <= 180) {
+     
+      long startTimeInMillis1 = System.currentTimeMillis();
 
       getRestaurantsResponse = restaurantService
               .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
       log.info("getRestaurants returned {}", getRestaurantsResponse);
 
+      long endTimeInMillis1 = System.currentTimeMillis();
+      System.out.println("Service Layer Your function took :"
+           + (endTimeInMillis1 - startTimeInMillis1 - RestaurantServiceImpl.timeReqData)
+            + " total : " + (endTimeInMillis1 - startTimeInMillis1));
+      timeReqServiceData = endTimeInMillis1 - startTimeInMillis1;
+
       for (Restaurant r : getRestaurantsResponse.getRestaurants()) {
         r.setName(r.getName().replaceAll("[^\\x00-\\x7F]", ""));
       }
 
+      // Call the function
+      long endTimeInMillis = System.currentTimeMillis();
+      System.out.println("Controller Layer Your function took :"
+          + (endTimeInMillis - startTimeInMillis - timeReqServiceData) + " total :"
+           + (endTimeInMillis - startTimeInMillis));
+
+      System.out.println("No of restaurants : " + getRestaurantsResponse.getRestaurants().size());
       return ResponseEntity.ok().body(getRestaurantsResponse);
     }
     //CHECKSTYLE:ON
     else {
+      System.out.println("Controller Layer Your function took :"
+          + " Zero");
       return ResponseEntity.badRequest().body(null);
     }
   
@@ -111,6 +134,8 @@ public class RestaurantController {
   //          : 5xx, if server side error.
   // Eg:
   // curl -X GET "http://localhost:8081/qeats/v1/menu?restaurantId=11"
+
+  // http://localhost:8081/qeats/v1/restaurants?latitude=23.176072654735524&longitude=79.94254287976105
 
 }
 

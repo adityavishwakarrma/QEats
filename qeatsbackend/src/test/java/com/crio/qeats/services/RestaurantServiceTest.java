@@ -1,4 +1,3 @@
-
 /*
  *
  *  * Copyright (c) Crio.Do 2019. All rights reserved
@@ -37,15 +36,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
-// TODO: CRIO_TASK_MODULE_RESTAURANTSAPI
 //  Pass all the RestaurantService test cases.
 // Contains necessary test cases that check for implementation correctness.
 // Objectives:
 // 1. Make modifications to the tests if necessary so that all test cases pass
 // 2. Test RestaurantService Api by mocking RestaurantRepositoryService.
 
-@SpringBootTest(classes = {QEatsApplication.class})
-@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 @DirtiesContext
 @ActiveProfiles("test")
 class RestaurantServiceTest {
