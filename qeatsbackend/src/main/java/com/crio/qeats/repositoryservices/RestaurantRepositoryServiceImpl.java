@@ -94,8 +94,6 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
     // Remember, you must ensure that if cache is not present, the queries are directed at the
     // database instead.
 
-    //CHECKSTYLE:OFF
-    //CHECKSTYLE:ON
  
   }
 
