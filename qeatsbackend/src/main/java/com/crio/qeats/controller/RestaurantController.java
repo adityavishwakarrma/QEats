@@ -57,7 +57,7 @@ public class RestaurantController {
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(
        GetRestaurantsRequest getRestaurantsRequest) {
 
-    long startTimeInMillis = System.currentTimeMillis();
+    // long startTimeInMillis = System.currentTimeMillis();
 
     log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
@@ -68,35 +68,34 @@ public class RestaurantController {
         && getRestaurantsRequest.getLongitude() >= -180 
         && getRestaurantsRequest.getLongitude() <= 180) {
      
-      long startTimeInMillis1 = System.currentTimeMillis();
+      // long startTimeInMillis1 = System.currentTimeMillis();
 
       getRestaurantsResponse = restaurantService
               .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
       log.info("getRestaurants returned {}", getRestaurantsResponse);
 
-      long endTimeInMillis1 = System.currentTimeMillis();
-      System.out.println("Service Layer Your function took :"
-           + (endTimeInMillis1 - startTimeInMillis1 - RestaurantServiceImpl.timeReqData)
-            + " total : " + (endTimeInMillis1 - startTimeInMillis1));
-      timeReqServiceData = endTimeInMillis1 - startTimeInMillis1;
+      // long endTimeInMillis1 = System.currentTimeMillis();
+      // System.out.println("Service Layer Your function took :"
+      //      + (endTimeInMillis1 - startTimeInMillis1 - RestaurantServiceImpl.timeReqData)
+      //       + " total : " + (endTimeInMillis1 - startTimeInMillis1));
+      // timeReqServiceData = endTimeInMillis1 - startTimeInMillis1;
 
       for (Restaurant r : getRestaurantsResponse.getRestaurants()) {
         r.setName(r.getName().replaceAll("[^\\x00-\\x7F]", ""));
       }
 
       // Call the function
-      long endTimeInMillis = System.currentTimeMillis();
-      System.out.println("Controller Layer Your function took :"
-          + (endTimeInMillis - startTimeInMillis - timeReqServiceData) + " total :"
-           + (endTimeInMillis - startTimeInMillis));
+      // long endTimeInMillis = System.currentTimeMillis();
+      // System.out.println("Controller Layer Your function took :"
+      //     + (endTimeInMillis - startTimeInMillis - timeReqServiceData) + " total :"
+      //      + (endTimeInMillis - startTimeInMillis));
 
       System.out.println("No of restaurants : " + getRestaurantsResponse.getRestaurants().size());
       return ResponseEntity.ok().body(getRestaurantsResponse);
     }
     //CHECKSTYLE:ON
     else {
-      System.out.println("Controller Layer Your function took :"
-          + " Zero");
+      // System.out.println("Controller Layer Your function took :" + " Zero");
       return ResponseEntity.badRequest().body(null);
     }
   

@@ -51,11 +51,11 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   @Autowired
   private RedisConfiguration redisConfiguration;
 
-  // @Autowired
-  // private MongoTemplate mongoTemplate;
+  @Autowired
+  private MongoTemplate mongoTemplate;
 
-  // @Autowired
-  // private Provider<ModelMapper> modelMapperProvider;
+  @Autowired
+  private Provider<ModelMapper> modelMapperProvider;
 
   private boolean isOpenNow(LocalTime time, RestaurantEntity res) {
     LocalTime openingTime = LocalTime.parse(res.getOpensAt());
@@ -171,7 +171,7 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
    */
   private boolean isRestaurantCloseByAndOpen(RestaurantEntity restaurantEntity,
       LocalTime currentTime, Double latitude, Double longitude, Double servingRadiusInKms) {
-    if (!isOpenNow(currentTime, restaurantEntity)) {
+    if (isOpenNow(currentTime, restaurantEntity)) {
       return GeoUtils.findDistanceInKm(latitude, longitude,
           restaurantEntity.getLatitude(), restaurantEntity.getLongitude())
           < servingRadiusInKms;
