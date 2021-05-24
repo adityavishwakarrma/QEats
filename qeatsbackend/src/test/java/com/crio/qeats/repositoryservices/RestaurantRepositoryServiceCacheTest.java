@@ -64,6 +64,21 @@ class RestaurantRepositoryServiceCacheTest {
     redisConfiguration.destroyCache();
   }
 
+  @Test
+  void restaurantsCloseByFromColdCache(@Autowired MongoTemplate mongoTemplate) throws IOException {
+    assertNotNull(mongoTemplate);
+    assertNotNull(restaurantRepositoryService);
+
+    when(mockRestaurantRepository.findAll()).thenReturn(listOfRestaurants());
+
+    List<Restaurant> allRestaurantsCloseBy = restaurantRepositoryService
+        .findAllRestaurantsCloseBy(20.0, 30.0, LocalTime.of(18, 1), 3.0);
+    verify(mockRestaurantRepository, times(1)).findAll();
+    assertEquals(2, allRestaurantsCloseBy.size());
+    assertEquals("11", allRestaurantsCloseBy.get(0).getRestaurantId());
+    assertEquals("12", allRestaurantsCloseBy.get(1).getRestaurantId());
+  }
+
 
   @Test
   void restaurantsCloseByFromWarmCache(@Autowired MongoTemplate mongoTemplate) throws IOException {

@@ -100,8 +100,9 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   private List<Restaurant> findAllRestaurantsCloseFromDb(Double latitude, Double longitude,
       LocalTime currentTime,
       Double servingRadiusInKms) {
-    ModelMapper modelMapper = new ModelMapper();
+    ModelMapper modelMapper = modelMapperProvider.get();//new ModelMapper();
     List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
+    // mongoTemplate.findAll(RestaurantEntity.class);
     List<Restaurant> restaurants = new ArrayList<Restaurant>();
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
       if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
@@ -179,14 +180,3 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   }
   
 }
-
-  // @Autowired
-  // private MongoTemplate mongoTemplate;
-
-  // @Autowired
-  // private Provider<ModelMapper> modelMapperProvider;
-
-  // ModelMapper modelMapper = modelMapperProvider.get();
-
-  // List<RestaurantEntity> restaurantEntities = mongoTemplate.findAll(RestaurantEntity.class);
-
