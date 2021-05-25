@@ -118,7 +118,7 @@ public class RedisConfiguration {
       jedisPool.destroy();
       jedisPool = null;
     }
-
+  
   }
 
 }
