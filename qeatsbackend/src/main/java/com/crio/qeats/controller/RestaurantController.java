@@ -51,7 +51,7 @@ public class RestaurantController {
   @Autowired
   private RestaurantService restaurantService;    
 
-  long timeReqServiceData;  
+  // long timeReqServiceData;  
 
   @GetMapping(RESTAURANTS_API)
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(

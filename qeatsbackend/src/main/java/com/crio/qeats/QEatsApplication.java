@@ -6,6 +6,7 @@
 
 package com.crio.qeats;
 
+import com.crio.qeats.globals.GlobalConstants;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -39,9 +40,7 @@ public class QEatsApplication {
 }
 
 
-// implementation "org.springframework.boot:spring-boot-starter"
-// implementation "org.springframework.boot:spring-boot-starter-web"
-//  "https://images.pexels.com/photos/1268558/pexels-photo-1268558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+
 //  {
 //   "id": "10",
 //   "restaurantId": "10",
@@ -54,4 +53,4 @@ public class QEatsApplication {
 //     "Tamil",
 //     "South Indian"
 //   ]
-// },
+// }

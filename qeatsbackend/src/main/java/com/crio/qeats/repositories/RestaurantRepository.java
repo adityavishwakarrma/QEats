@@ -20,5 +20,17 @@ import org.springframework.stereotype.Repository;
 
 public interface RestaurantRepository extends MongoRepository<RestaurantEntity, String> {
 
+  List<RestaurantEntity> findRestaurantsByName(String name);
+
+  List<RestaurantEntity> findRestaurantsByAttributes(List<String> attributes);
+
+  List<RestaurantEntity> findRestaurantsByItemName();
+
+  List<RestaurantEntity> findRestaurantsByItemAttributes();
+
+  List<RestaurantEntity> isRestaurantCloseByAndOpen();
+
+  List<RestaurantEntity> findRestaurantsByNameExact(Object any);
+
 }
 
