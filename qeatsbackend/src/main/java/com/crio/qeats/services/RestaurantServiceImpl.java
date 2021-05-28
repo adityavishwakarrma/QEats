@@ -96,7 +96,47 @@ public class RestaurantServiceImpl implements RestaurantService {
   public GetRestaurantsResponse findRestaurantsBySearchQuery(
       GetRestaurantsRequest getRestaurantsRequest, LocalTime currentTime) {
 
-    return null;
+    List<Restaurant> restaurant;
+    int h = currentTime.getHour();
+    int m = currentTime.getMinute();
+    if ((h >= 8 && h <= 9) || (h == 10 && m == 0) || (h == 13) || (h == 14 && m == 0) 
+           || (h >= 19 && h <= 20) || (h == 21 && m == 0)) {
+    
+      List<Restaurant> restaurant1 = restaurantRepositoryService
+          .findRestaurantsByName(getRestaurantsRequest.getLatitude(),
+          getRestaurantsRequest.getLongitude(),
+          getRestaurantsRequest.getSearchFor(), currentTime, normalHoursServingRadiusInKms);
+      List<Restaurant> restaurant2 = restaurantRepositoryService
+          .findRestaurantsByAttributes(getRestaurantsRequest.getLatitude(),
+          getRestaurantsRequest.getLongitude(),
+          getRestaurantsRequest.getSearchFor(), currentTime, normalHoursServingRadiusInKms);
+
+      restaurant = getUnionOfLists(restaurant1, restaurant2);
+
+    } else {
+
+      List<Restaurant> restaurant1 = restaurantRepositoryService
+          .findRestaurantsByName(getRestaurantsRequest.getLatitude(),
+          getRestaurantsRequest.getLongitude(),
+          getRestaurantsRequest.getSearchFor(), currentTime, peakHoursServingRadiusInKms);
+      List<Restaurant> restaurant2 = restaurantRepositoryService
+          .findRestaurantsByAttributes(getRestaurantsRequest.getLatitude(),
+          getRestaurantsRequest.getLongitude(),
+          getRestaurantsRequest.getSearchFor(), currentTime, peakHoursServingRadiusInKms);
+
+      restaurant = getUnionOfLists(restaurant1, restaurant2);
+
+    }
+    GetRestaurantsResponse response = new GetRestaurantsResponse(restaurant);
+    log.info(response);
+    return response;
+  }
+
+  private static List<Restaurant> getUnionOfLists(List<Restaurant> list1, List<Restaurant> list2) {
+    Set<Restaurant> set = new HashSet<>();
+    set.addAll(list1);
+    set.addAll(list2);
+    return new ArrayList<>(set);
   }
 
 }

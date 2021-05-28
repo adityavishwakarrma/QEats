@@ -7,6 +7,8 @@
 package com.crio.qeats.repositories;
 
 import com.crio.qeats.models.RestaurantEntity;
+import com.mongodb.connection.Stream;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -20,17 +22,14 @@ import org.springframework.stereotype.Repository;
 
 public interface RestaurantRepository extends MongoRepository<RestaurantEntity, String> {
 
-  List<RestaurantEntity> findRestaurantsByName(String name);
+  
+  List<RestaurantEntity> findByName(String name);
 
-  List<RestaurantEntity> findRestaurantsByAttributes(List<String> attributes);
+  @Query("{attributes: {$regex: ?0}}")
+  List<RestaurantEntity> findRestaurantsByAttributes(String attributes);
 
-  List<RestaurantEntity> findRestaurantsByItemName();
-
-  List<RestaurantEntity> findRestaurantsByItemAttributes();
-
-  List<RestaurantEntity> isRestaurantCloseByAndOpen();
-
-  List<RestaurantEntity> findRestaurantsByNameExact(Object any);
+  @Query("{name: ?0}")
+  List<RestaurantEntity> findRestaurantsByNameExact(String name);
 
 }
 

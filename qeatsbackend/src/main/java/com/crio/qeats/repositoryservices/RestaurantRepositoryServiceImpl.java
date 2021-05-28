@@ -47,7 +47,7 @@ import redis.clients.jedis.Jedis;
 
 
 @Primary
-@Service
+@Component
 public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryService {
 
   @Autowired
@@ -96,16 +96,15 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
     // Remember, you must ensure that if cache is not present, the queries are directed at the
     // database instead.
 
- 
   }
 
   private List<Restaurant> findAllRestaurantsCloseFromDb(Double latitude, Double longitude,
-      LocalTime currentTime,
-      Double servingRadiusInKms) {
-    ModelMapper modelMapper = modelMapperProvider.get();//new ModelMapper();
+      LocalTime currentTime, Double servingRadiusInKms) {
+
+    ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
-    // mongoTemplate.findAll(RestaurantEntity.class);
     List<Restaurant> restaurants = new ArrayList<Restaurant>();
+
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
       if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
           latitude, longitude, servingRadiusInKms)) {
@@ -166,12 +165,6 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   // 1. Check if a restaurant is nearby and open. If so, it is a candidate to be returned.
   // NOTE: How far exactly is "nearby"?
 
-
-
-
-  //   return restaurants;
-  // }
-
   // TODO: CRIO_TASK_MODULE_RESTAURANTSEARCH
   // Objective:
   // Find restaurants whose names have an exact or partial match with the search query.
@@ -179,14 +172,17 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   public List<Restaurant> findRestaurantsByName(Double latitude, Double longitude,
       String searchString, LocalTime currentTime, Double servingRadiusInKms) {
 
-    ModelMapper modelMapper = modelMapperProvider.get();//new ModelMapper();
+    ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-        .findRestaurantsByName(searchString);
+        .findByName(searchString);
     
     List<Restaurant> restaurants = new ArrayList<>();
 
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
-      restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+      if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
+          latitude, longitude, servingRadiusInKms)) {
+        restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+      }
     }
 
     return restaurants;
@@ -200,16 +196,18 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   public List<Restaurant> findRestaurantsByAttributes(
       Double latitude, Double longitude,
       String searchString, LocalTime currentTime, Double servingRadiusInKms) {
-    ModelMapper modelMapper = modelMapperProvider.get();//new ModelMapper();
-    List<String> attr = new ArrayList<>();
-    attr.add(searchString);
+
+    ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-          .findRestaurantsByAttributes(attr);
+        .findRestaurantsByAttributes(searchString);
         
     List<Restaurant> restaurants = new ArrayList<>();
     
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
-      restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+      if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
+          latitude, longitude, servingRadiusInKms)) {
+        restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+      }
     }
     
     return restaurants;
@@ -226,9 +224,21 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   public List<Restaurant> findRestaurantsByItemName(
       Double latitude, Double longitude,
       String searchString, LocalTime currentTime, Double servingRadiusInKms) {
-
-
-    return null;
+    
+    ModelMapper modelMapper = modelMapperProvider.get();
+    List<RestaurantEntity> restaurantEntities = restaurantRepository
+        .findRestaurantsByAttributes(searchString);
+            
+    List<Restaurant> restaurants = new ArrayList<>();
+        
+    for (RestaurantEntity restaurantEntity : restaurantEntities) {
+      if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
+              latitude, longitude, servingRadiusInKms)) {
+        restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+      }
+    }
+        
+    return restaurants;
   }
 
   // TODO: CRIO_TASK_MODULE_RESTAURANTSEARCH
@@ -237,8 +247,20 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
   @Override
   public List<Restaurant> findRestaurantsByItemAttributes(Double latitude, Double longitude,
       String searchString, LocalTime currentTime, Double servingRadiusInKms) {
-
-    return null;
+    ModelMapper modelMapper = modelMapperProvider.get();
+    List<RestaurantEntity> restaurantEntities = restaurantRepository
+        .findRestaurantsByAttributes(searchString);
+                
+    List<Restaurant> restaurants = new ArrayList<>();
+            
+    for (RestaurantEntity restaurantEntity : restaurantEntities) {
+      if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
+                  latitude, longitude, servingRadiusInKms)) {
+        restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+      }
+    }
+            
+    return restaurants;
   }
 
 

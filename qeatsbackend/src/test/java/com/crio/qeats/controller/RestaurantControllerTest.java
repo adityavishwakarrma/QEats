@@ -54,6 +54,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -102,7 +103,7 @@ public class RestaurantControllerTest {
 
   @Test
   public void correctQueryReturnsOkResponseAndListOfRestaurants() throws Exception {
-    GetRestaurantsResponse sampleResponse = loadSampleResponseList();
+    GetRestaurantsResponse sampleResponse = loadSampleResponseList();   
     assertNotNull(sampleResponse);
 
     when(restaurantService
@@ -165,6 +166,9 @@ public class RestaurantControllerTest {
 
     verify(restaurantService, times(1))
         .findRestaurantsBySearchQuery(argumentCaptor.capture(), any(LocalTime.class));
+
+    // verify(restaurantService, times(1))
+    //     .findAllRestaurantsCloseBy(argumentCaptor.capture(), any(LocalTime.class));
 
     assertEquals("20.21", argumentCaptor.getValue().getLatitude().toString());
 
