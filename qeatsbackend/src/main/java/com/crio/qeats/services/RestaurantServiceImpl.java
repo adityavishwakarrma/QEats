@@ -12,8 +12,11 @@ import com.crio.qeats.exchanges.GetRestaurantsResponse;
 import com.crio.qeats.repositoryservices.RestaurantRepositoryService;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -107,7 +110,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     } else if ((h >= 8 && h <= 9) || (h == 10 && m == 0) || (h == 13) || (h == 14 && m == 0) 
            || (h >= 19 && h <= 20) || (h == 21 && m == 0)) {
-    
+
+
       List<Restaurant> restaurant1 = restaurantRepositoryService
           .findRestaurantsByName(getRestaurantsRequest.getLatitude(),
           getRestaurantsRequest.getLongitude(),
@@ -117,6 +121,7 @@ public class RestaurantServiceImpl implements RestaurantService {
           getRestaurantsRequest.getLongitude(),
           getRestaurantsRequest.getSearchFor(), currentTime, peakHoursServingRadiusInKms);
 
+      
       restaurant = getUnionOfLists(restaurant1, restaurant2);
 
     } else {
@@ -135,15 +140,26 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
     GetRestaurantsResponse response = new GetRestaurantsResponse(restaurant);
     log.info(response);
-    "".isEmpty();
+
     return response;
   }
 
   private List<Restaurant> getUnionOfLists(List<Restaurant> list1, List<Restaurant> list2) {
-    Set<Restaurant> set = new HashSet<>();
+
+    list1.addAll(list2);
+
+    // convert the arraylist into a set
+    Set<Restaurant> set = new LinkedHashSet<>();
     set.addAll(list1);
-    set.addAll(list2);
-    return new ArrayList<>(set);
+
+    // delete al elements of arraylist
+    list1.clear();
+
+    // add element from set to arraylist
+    list1.addAll(set);
+
+  
+    return list1;
   }
 
 }

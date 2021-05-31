@@ -26,6 +26,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -176,11 +177,15 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
     ModelMapper modelMapper = modelMapperProvider.get();
 
 
-    // Optional<List<RestaurantEntity>> restaurantEntities = restaurantRepository
-    //     .findRestaurantsByNameExact(searchString);
+    Optional<List<RestaurantEntity>> restaurantEntitiesOp = restaurantRepository
+        .findRestaurantsByNameExact(searchString);
+
+    List<RestaurantEntity> restaurantEntities1 = restaurantEntitiesOp.get();
+    List<RestaurantEntity> restaurantEntities2 =  restaurantRepository
+         .findRestaurantsByName(searchString);
     
-    List<RestaurantEntity> restaurantEntities =  restaurantRepository
-         .findingByName(searchString);
+    List<RestaurantEntity> restaurantEntities = getUnionOfLists(restaurantEntities1,
+        restaurantEntities2);
     
     List<Restaurant> restaurants = new ArrayList<>();
 
@@ -205,7 +210,7 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
     ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-        .findingRestaurantsAttributes(searchString);
+        .findRestaurantsByAttributes(searchString);
 
     List<Restaurant> restaurants = new ArrayList<>();
 
@@ -232,7 +237,7 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
     ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-          .findingRestaurantsAttributes(searchString);
+          .findRestaurantsByAttributes(searchString);
 
     List<Restaurant> restaurants = new ArrayList<>();
 
@@ -256,7 +261,7 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
       LocalTime currentTime, Double servingRadiusInKms) {
     ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-         .findingRestaurantsAttributes(searchString);
+         .findRestaurantsByAttributes(searchString);
                 
     List<Restaurant> restaurants = new ArrayList<>();
             
@@ -273,6 +278,26 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
 
 
+
+
+  private List<RestaurantEntity> getUnionOfLists(List<RestaurantEntity> list1,
+      List<RestaurantEntity> list2) {
+
+    list1.addAll(list2);
+
+    // convert the arraylist into a set
+    Set<RestaurantEntity> set = new LinkedHashSet<>();
+    set.addAll(list1);
+
+    // delete al elements of arraylist
+    list1.clear();
+
+    // add element from set to arraylist
+    list1.addAll(set);
+
+  
+    return list1;
+  }
 
   /**
    * Utility method to check if a restaurant is within the serving radius at a given time.
