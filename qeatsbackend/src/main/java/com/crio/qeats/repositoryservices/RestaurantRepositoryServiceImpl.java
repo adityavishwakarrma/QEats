@@ -103,6 +103,7 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
     ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
+
     List<Restaurant> restaurants = new ArrayList<Restaurant>();
 
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
@@ -173,8 +174,13 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
       String searchString, LocalTime currentTime, Double servingRadiusInKms) {
 
     ModelMapper modelMapper = modelMapperProvider.get();
-    List<RestaurantEntity> restaurantEntities = restaurantRepository
-        .findByName(searchString);
+
+
+    // Optional<List<RestaurantEntity>> restaurantEntities = restaurantRepository
+    //     .findRestaurantsByNameExact(searchString);
+    
+    List<RestaurantEntity> restaurantEntities =  restaurantRepository
+         .findingByName(searchString);
     
     List<Restaurant> restaurants = new ArrayList<>();
 
@@ -199,57 +205,58 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
     ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-        .findRestaurantsByAttributes(searchString);
-        
+        .findingRestaurantsAttributes(searchString);
+
     List<Restaurant> restaurants = new ArrayList<>();
-    
+
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
       if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
           latitude, longitude, servingRadiusInKms)) {
         restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
       }
     }
-    
+
     return restaurants;
   }
 
-
-
   // TODO: CRIO_TASK_MODULE_RESTAURANTSEARCH
   // Objective:
-  // Find restaurants which serve food items whose names form a complete or partial match
+  // Find restaurants which serve food items whose names form a complete or
+  // partial match
   // with the search query.
 
   @Override
-  public List<Restaurant> findRestaurantsByItemName(
-      Double latitude, Double longitude,
-      String searchString, LocalTime currentTime, Double servingRadiusInKms) {
-    
+  public List<Restaurant> findRestaurantsByItemName(Double latitude,
+       Double longitude, String searchString,
+      LocalTime currentTime, Double servingRadiusInKms) {
+
     ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-        .findRestaurantsByAttributes(searchString);
-            
+          .findingRestaurantsAttributes(searchString);
+
     List<Restaurant> restaurants = new ArrayList<>();
-        
+
     for (RestaurantEntity restaurantEntity : restaurantEntities) {
       if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime,
-              latitude, longitude, servingRadiusInKms)) {
+          latitude, longitude, servingRadiusInKms)) {
         restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
       }
     }
-        
+
     return restaurants;
   }
 
   // TODO: CRIO_TASK_MODULE_RESTAURANTSEARCH
   // Objective:
-  // Find restaurants which serve food items whose attributes intersect with the search query.
+  // Find restaurants which serve food items whose attributes intersect with the
+  // search query.
   @Override
-  public List<Restaurant> findRestaurantsByItemAttributes(Double latitude, Double longitude,
-      String searchString, LocalTime currentTime, Double servingRadiusInKms) {
+  public List<Restaurant> findRestaurantsByItemAttributes(Double latitude,
+       Double longitude, String searchString,
+      LocalTime currentTime, Double servingRadiusInKms) {
     ModelMapper modelMapper = modelMapperProvider.get();
     List<RestaurantEntity> restaurantEntities = restaurantRepository
-        .findRestaurantsByAttributes(searchString);
+         .findingRestaurantsAttributes(searchString);
                 
     List<Restaurant> restaurants = new ArrayList<>();
             

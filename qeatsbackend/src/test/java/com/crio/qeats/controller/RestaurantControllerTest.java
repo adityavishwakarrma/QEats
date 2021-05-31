@@ -167,9 +167,6 @@ public class RestaurantControllerTest {
     verify(restaurantService, times(1))
         .findRestaurantsBySearchQuery(argumentCaptor.capture(), any(LocalTime.class));
 
-    // verify(restaurantService, times(1))
-    //     .findAllRestaurantsCloseBy(argumentCaptor.capture(), any(LocalTime.class));
-
     assertEquals("20.21", argumentCaptor.getValue().getLatitude().toString());
 
     assertEquals("30.31", argumentCaptor.getValue().getLongitude().toString());

@@ -145,6 +145,7 @@ class RestaurantServiceTest {
     verify(restaurantRepositoryServiceMock, times(1))
         .findRestaurantsByAttributes(any(Double.class), any(Double.class), any(String.class),
             any(LocalTime.class), any(Double.class));
+    
     assertEquals(4, allRestaurantsSearchResults.getRestaurants().size());
     assertEquals("10", allRestaurantsSearchResults.getRestaurants().get(0).getRestaurantId());
     assertEquals("11", allRestaurantsSearchResults.getRestaurants().get(1).getRestaurantId());

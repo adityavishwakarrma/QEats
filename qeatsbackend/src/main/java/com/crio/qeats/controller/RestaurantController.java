@@ -13,6 +13,8 @@ import com.crio.qeats.services.RestaurantService;
 import com.crio.qeats.services.RestaurantServiceImpl;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +72,21 @@ public class RestaurantController {
      
       // long startTimeInMillis1 = System.currentTimeMillis();
 
-      getRestaurantsResponse = restaurantService
-              .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
+  
+
+      if (getRestaurantsRequest.getSearchFor() != null) {
+        getRestaurantsResponse = restaurantService
+        .findRestaurantsBySearchQuery(getRestaurantsRequest, LocalTime.now());
+      } else {
+        getRestaurantsResponse = restaurantService
+        .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
+      }
+
+      if (getRestaurantsResponse == null) {
+        getRestaurantsResponse = new  GetRestaurantsResponse(new ArrayList<Restaurant>());
+      }
+
+
       log.info("getRestaurants returned {}", getRestaurantsResponse);
 
       // long endTimeInMillis1 = System.currentTimeMillis();
