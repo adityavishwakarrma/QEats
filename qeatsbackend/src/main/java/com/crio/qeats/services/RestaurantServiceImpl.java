@@ -175,6 +175,7 @@ public class RestaurantServiceImpl implements RestaurantService {
       //     getRestaurantsRequest.getLongitude(),
       //     getRestaurantsRequest.getSearchFor(), currentTime, normalHoursServingRadiusInKms);
       // List<Restaurant> restaurant2 = restaurantRepositoryService
+
       //     .findRestaurantsByAttributes(getRestaurantsRequest.getLatitude(),
       //     getRestaurantsRequest.getLongitude(),
       //     getRestaurantsRequest.getSearchFor(), currentTime, normalHoursServingRadiusInKms);
@@ -225,7 +226,7 @@ public class RestaurantServiceImpl implements RestaurantService {
  
     list1.addAll(list2);
 
-    // convert the arraylist into a set
+    //  convert the arraylist into a set
     Set<Restaurant> set = new LinkedHashSet<>();
     set.addAll(list1);
 
