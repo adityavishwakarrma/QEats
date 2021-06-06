@@ -122,15 +122,15 @@ public class RestaurantServiceImpl implements RestaurantService {
         || (h == 21 && m == 0)) {
 
       // List<Restaurant> restaurant1 = restaurantRepositoryService
-      // .findRestaurantsByName(getRestaurantsRequest.getLatitude(),
-      // getRestaurantsRequest.getLongitude(),
-      // getRestaurantsRequest.getSearchFor(), currentTime,
-      // peakHoursServingRadiusInKms);
+      //     .findRestaurantsByName(getRestaurantsRequest.getLatitude(),
+      //     getRestaurantsRequest.getLongitude(),
+      //     getRestaurantsRequest.getSearchFor(), currentTime,
+      //     peakHoursServingRadiusInKms);
       // List<Restaurant> restaurant2 = restaurantRepositoryService
-      // .findRestaurantsByAttributes(getRestaurantsRequest.getLatitude(),
-      // getRestaurantsRequest.getLongitude(),
-      // getRestaurantsRequest.getSearchFor(), currentTime,
-      // peakHoursServingRadiusInKms);
+      //     .findRestaurantsByAttributes(getRestaurantsRequest.getLatitude(),
+      //     getRestaurantsRequest.getLongitude(),
+      //     getRestaurantsRequest.getSearchFor(), currentTime,
+      //     peakHoursServingRadiusInKms);
 
       final ExecutorService pool = Executors.newFixedThreadPool(20);
       List<Future<List<Restaurant>>> futureReturnsList = new ArrayList<Future<List<Restaurant>>>();
